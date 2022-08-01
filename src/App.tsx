@@ -15,6 +15,7 @@ interface AppProps {
 }
 
 function App() {
+  const [tasksCompleted, setTasksCompleted] = useState(0);
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState<AppProps[]>([
     {
@@ -37,6 +38,9 @@ function App() {
     });
 
     setTasks(tasksWithoutDeletedOne);
+
+    const quantityTasksCompleted = tasksWithoutDeletedOne.filter(task => task.isCompleted === true).length;
+    setTasksCompleted(quantityTasksCompleted);
   }
 
   function handleCreateNewTask(event: FormEvent) {
@@ -53,7 +57,6 @@ function App() {
   }
 
   function isCompletedTask(idTask: number) {
-    console.log(idTask);
     const taskIndex = tasks.findIndex((task) => {
       return task.id === idTask;
     });
@@ -61,6 +64,9 @@ function App() {
       
     tempTasks[taskIndex].isCompleted = !tempTasks[taskIndex].isCompleted;
     setTasks(tempTasks);
+
+    const quantityTasksCompleted = tasks.filter(task => task.isCompleted === true).length;
+    setTasksCompleted(quantityTasksCompleted);
   }
 
   function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
@@ -72,11 +78,7 @@ function App() {
     event.target.setCustomValidity("Esse campo é obrigatório!")
   }
 
-  const TasksCompletedLeght = tasks.map(task => {
-    const data = 0;
-    task.isCompleted === true ?? data + 1;
-    return data
-  });
+  const quantityTasksCompleted = tasks.length === 0 ? '0' : tasksCompleted + ' de ' + tasks.length;
 
   return (
     <>
@@ -106,7 +108,7 @@ function App() {
             </div>
             <div className={styles.done}>
               <p>Concluídas</p>
-              <span className={styles.counter}>{TasksCompletedLeght} de {tasks.length}</span>  
+              <span className={styles.counter}>{quantityTasksCompleted}</span>  
             </div>
           </div>
 
