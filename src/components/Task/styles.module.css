@@ -20,6 +20,8 @@
 
 .checkbox {
   margin-right: 1rem;
+  display: flex; 
+  gap: 1rem;
 }
 
 .checkbox input[type="checkbox"] {
@@ -53,11 +55,21 @@
   background: var(--purple-500);
 }
 
+.completedTask {
+  color: var(--gray-300);
+  text-decoration: line-through;
+}
+
 .checkbox input[type="checkbox"]:checked + label svg{
   color: var(--white);
 }
 
-.task > svg {
+.task > button {
+  border: none;
+  background: transparent;
+}
+
+.task > button > svg {
   margin-left: 1rem;
   cursor: pointer;
   color: var(--gray-300);

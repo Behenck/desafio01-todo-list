@@ -5,8 +5,8 @@ import { Task } from './components/Task';
 
 import './styles/global.css';
 import styles from './App.module.css';
-import { PlusCircle } from 'phosphor-react';
-import { useState } from 'react';
+import { Check, PlusCircle, Trash } from 'phosphor-react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 interface AppProps {
   id: number;
@@ -15,8 +15,7 @@ interface AppProps {
 }
 
 function App() {
-  const taskExists = true;
-
+  const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState<AppProps[]>([
     {
       id: 1,
@@ -25,15 +24,38 @@ function App() {
     },
     {
       id: 2,
-      isCompleted: true,
+      isCompleted: false,
       content: 'Integers urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
     }
   ]);
 
+  const taskExists = tasks.length > 0 ? true : false;
+
+  function deleteTask(idTask: number) {
+    const tasksWithoutDeletedOne = tasks.filter(task => {
+      return task.id !== idTask;
+    });
+
+    setTasks(tasksWithoutDeletedOne);
+  }
+
+  function handleCreateNewTask(event: FormEvent) {
+    event.preventDefault();
+
+    const newCreateTask = {
+      id: tasks.length + 1,
+      isCompleted: false,
+      content: newTask
+    }
+
+    setTasks([...tasks, newCreateTask]);
+    setNewTask("");
+  }
+
   function isCompletedTask(idTask: number) {
     console.log(idTask);
     const taskIndex = tasks.findIndex((task) => {
-      return task.id == idTask;
+      return task.id === idTask;
     });
     const tempTasks = [...tasks];
       
@@ -41,13 +63,35 @@ function App() {
     setTasks(tempTasks);
   }
 
+  function handleNewTaskChange(event: ChangeEvent<HTMLInputElement>) {
+    event.target.setCustomValidity("")
+    setNewTask(event.target.value);
+  }
+
+  function handleNewTaskInvalid(event: InvalidEvent<HTMLInputElement>) {
+    event.target.setCustomValidity("Esse campo é obrigatório!")
+  }
+
+  const TasksCompletedLeght = tasks.map(task => {
+    const data = 0;
+    task.isCompleted === true ?? data + 1;
+    return data
+  });
+
   return (
     <>
       <Header />
 
       <div className={styles.container}>
-        <form className={styles.newTask}>
-          <input type="text" placeholder="Adicione uma nova tarefa" />
+        <form className={styles.newTask} onSubmit={handleCreateNewTask}>
+          <input 
+            type="text" 
+            placeholder="Adicione uma nova tarefa" 
+            value={newTask} 
+            onChange={handleNewTaskChange}
+            onInvalid={handleNewTaskInvalid}
+            required
+          />
           <button type="submit">
             Criar
             <PlusCircle size={20} />
@@ -58,28 +102,29 @@ function App() {
           <div className={styles.info}>
             <div className={styles.created}>
               <p>Tarefas Criadas</p>
-              <span className={styles.counter}>0</span>
+              <span className={styles.counter}>{tasks.length}</span>
             </div>
             <div className={styles.done}>
               <p>Concluídas</p>
-              <span className={styles.counter}>0</span>
+              <span className={styles.counter}>{TasksCompletedLeght} de {tasks.length}</span>  
             </div>
           </div>
 
           {taskExists ? (
             <div className={styles.tasksList}>
-              {tasks.map(task => {
-                return (
-                  <Task 
-                    key={task.id}
-                    idTask={task.id}
-                    isCompleted={task.isCompleted} 
-                    content={task.content} 
-                    onIsCompletedTask={isCompletedTask}
-                  />
-                )
-              })}
-            </div>
+            {tasks.map(task => {
+              return (
+                <Task 
+                  key={task.id}
+                  idTask={task.id}
+                  content={task.content}
+                  isCompleted={task.isCompleted}
+                  onDeleteTask={deleteTask}
+                  onIsCompletedTask={isCompletedTask}
+                />
+              )
+            })}
+          </div>
           ) : (
             <div className={styles.content}>
               <img src={ImageClipboard} alt="imagem tarefas" />

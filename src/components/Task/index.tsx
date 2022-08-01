@@ -6,10 +6,15 @@ interface TaskProps {
   idTask: number;
   isCompleted?: boolean;
   content: string;
+  onDeleteTask: (idTask: number) => void;
   onIsCompletedTask: (idTask: number) => void;
 }
 
-export function Task({ idTask, isCompleted = false, content, onIsCompletedTask }: TaskProps) {
+export function Task({ idTask, isCompleted = false, content, onDeleteTask, onIsCompletedTask }: TaskProps) {
+  function handleDeleteTask() {
+    onDeleteTask(idTask);
+  }
+
   function handleIsCompletedTask() {
     onIsCompletedTask(idTask)
   }
@@ -18,17 +23,18 @@ export function Task({ idTask, isCompleted = false, content, onIsCompletedTask }
     <div className={styles.task}>
       <div className={styles.checkbox}>
         <input 
-          id="myCheckbox" 
+          id={`myCheckbox${idTask}`} 
           type="checkbox" 
           defaultChecked={isCompleted}
-          onClick={handleIsCompletedTask}
         />
-        <label htmlFor="myCheckbox">
+        <label htmlFor={`myCheckbox${idTask}`} onClick={handleIsCompletedTask}>
           <Check size={24} />
         </label>
+        <p className={isCompleted ? styles.completedTask : ''}>{content}</p>
       </div>
-      <p>{content}</p>
-      <Trash size={24} />
+      <button onClick={handleDeleteTask} title="Deletar Tarefa">
+        <Trash size={24} />
+      </button>
     </div>
   )
 }
