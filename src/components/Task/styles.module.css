@@ -5,9 +5,8 @@
 
   background: var(--gray-500);
   border: 1px solid var(--gray-400);
-  padding: 1rem;
+  padding: 1.2rem;
   border-radius: 8px;
-  height: 4.75rem;
 
   color: var(--gray-100);
   font-size: 0.885rem;

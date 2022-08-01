@@ -6,10 +6,12 @@
 }
 
 .newTask {
-  width: 46rem;
+  width: 100%;
+  max-width: 46rem;
   margin-top: -1.675rem;
   display: flex;
   gap: .5rem;
+  padding: 0 1rem;
 }
 
 .newTask input {
@@ -33,8 +35,10 @@
 }
 
 .tasks {
-  width: 46rem;
+  width: 100%;
+  max-width: 46rem;
   margin-top: 4rem;
+  padding: 0 1rem;
 }
 
 .info {
