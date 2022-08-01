@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.newTask {
+  width: 46rem;
+  margin-top: -1.675rem;
+  display: flex;
+  gap: .5rem;
+}
+
+.newTask input {
+  width: 100%;
+  padding: 1rem;
+
+  background: var(--gray-500);
+  color: var(--gray-300);
+  border-radius:8px;
+  border: 1px solid var(--gray-700);
+}
+
+.newTask button {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--blue-700);
+  border: none;
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--white);
+}
+
+.tasks {
+  width: 46rem;
+  margin-top: 4rem;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.created, .done {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.created p {
+  color: var(--blue-500);
+}
+
+.done p {
+  color: var(--purple-500);
+}
+
+.counter {
+  background: var(--gray-500);
+  color: var(--gray-200);
+  border-radius: 100%;
+  padding: .125rem 0.5rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 4rem;
+  border-top: 1px solid var(--gray-500);
+  border-radius: 8px;
+}
+
+.content img {
+  margin-bottom: 1rem;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.content p:first-of-type {
+  font-weight: bold;
+}
+
+.tasksList {
+  margin-top: 2rem;
+}

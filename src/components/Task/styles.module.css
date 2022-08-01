@@ -1,0 +1,64 @@
+.task {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  background: var(--gray-500);
+  border: 1px solid var(--gray-400);
+  padding: 1rem;
+  border-radius: 8px;
+  height: 4.75rem;
+
+  color: var(--gray-100);
+  font-size: 0.885rem;
+  font-weight: 400;
+}
+
+.task + .task {
+  margin-top: 1rem;
+}
+
+.checkbox {
+  margin-right: 1rem;
+}
+
+.checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox input[type="checkbox"] + label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+  background: var(--gray-500);
+  border: 2px solid var(--blue-500);
+  border-radius: 50%;
+  appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+  
+    transition: all 0.1s
+}
+
+.checkbox label svg {
+  color: var(--gray-500);
+}
+
+.checkbox input[type="checkbox"]:checked + label{
+  border: 2px solid var(--purple-500);
+  background: var(--purple-500);
+}
+
+.checkbox input[type="checkbox"]:checked + label svg{
+  color: var(--white);
+}
+
+.task > svg {
+  margin-left: 1rem;
+  cursor: pointer;
+  color: var(--gray-300);
+}
