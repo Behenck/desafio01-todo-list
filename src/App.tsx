@@ -1,3 +1,5 @@
+import { v4 as uuidV4 } from 'uuid';
+
 import { Header } from './components/Header';
 
 import ImageClipboard from './assets/Clipboard.svg';
@@ -9,7 +11,7 @@ import { Check, PlusCircle, Trash } from 'phosphor-react';
 import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 
 interface AppProps {
-  id: number;
+  id: string;
   isCompleted: boolean;
   content: string;
 }
@@ -19,12 +21,12 @@ function App() {
   const [newTask, setNewTask] = useState('');
   const [tasks, setTasks] = useState<AppProps[]>([
     {
-      id: 1,
+      id: uuidV4(),
       isCompleted: false,
       content: 'Integer urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
     },
     {
-      id: 2,
+      id: uuidV4(),
       isCompleted: false,
       content: 'Integers urna interdum massa libero auctor neque turpis turpis semper. Duis vel sed fames integer.'
     }
@@ -32,7 +34,7 @@ function App() {
 
   const taskExists = tasks.length > 0 ? true : false;
 
-  function deleteTask(idTask: number) {
+  function deleteTask(idTask: string) {
     const tasksWithoutDeletedOne = tasks.filter(task => {
       return task.id !== idTask;
     });
@@ -47,7 +49,7 @@ function App() {
     event.preventDefault();
 
     const newCreateTask = {
-      id: tasks.length + 1,
+      id: uuidV4(),
       isCompleted: false,
       content: newTask
     }
@@ -56,14 +58,13 @@ function App() {
     setNewTask("");
   }
 
-  function isCompletedTask(idTask: number) {
-    const taskIndex = tasks.findIndex((task) => {
-      return task.id === idTask;
+  function isCompletedTask(idTask: string) {
+    const newTask = tasks.map(task => {
+      task.id === idTask ? task.isCompleted = !task.isCompleted : task.isCompleted
+      return {...task, isCompleted: task.isCompleted}
     });
-    const tempTasks = [...tasks];
-      
-    tempTasks[taskIndex].isCompleted = !tempTasks[taskIndex].isCompleted;
-    setTasks(tempTasks);
+
+    setTasks(newTask);
 
     const quantityTasksCompleted = tasks.filter(task => task.isCompleted === true).length;
     setTasksCompleted(quantityTasksCompleted);

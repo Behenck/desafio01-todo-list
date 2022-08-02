@@ -3,11 +3,11 @@ import { Check, Trash } from "phosphor-react";
 import styles from './styles.module.css';
 
 interface TaskProps {
-  idTask: number;
+  idTask: string;
   isCompleted?: boolean;
   content: string;
-  onDeleteTask: (idTask: number) => void;
-  onIsCompletedTask: (idTask: number) => void;
+  onDeleteTask: (idTask: string) => void;
+  onIsCompletedTask: (idTask: string) => void;
 }
 
 export function Task({ idTask, isCompleted = false, content, onDeleteTask, onIsCompletedTask }: TaskProps) {
